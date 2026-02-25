@@ -1,123 +1,72 @@
+## 📌 O que é uv?
 
-## 📌 O que é venv?  
-O **venv** é uma ferramenta nativa do Python que cria um ambiente isolado para instalar pacotes sem interferir no sistema global. Isso ajuda a manter versões específicas de bibliotecas para cada projeto.  
-
----
-
-## 🎯 1. Criando um Ambiente Virtual  
-
-### 🔹 Verifique se você tem o Python instalado  
-Abra o terminal e execute:  
-```bash
-  python --version
-```
-ou  
-```bash
-  python3 --version
-```
-Se retornar algo como `Python 3.x.x`, você está pronto para continuar.  
+O **uv** é um gerenciador de projetos Python ultra-rápido. Diferente do fluxo antigo (`venv` + `pip`), o `uv` utiliza um arquivo de trava (`uv.lock`) para garantir que todos os desenvolvedores utilizem exatamente as mesmas versões de bibliotecas.
 
 ---
 
-### 🔹 Criando o ambiente virtual  
-No diretório do seu projeto (ex: `samu`), execute:  
-```bash
-  python -m venv venv
-```
-Ou
-```bash
-  python3 -m venv venv
-```
-Isso criará uma pasta chamada **venv/** contendo o ambiente virtual.  
+## 🎯 1. Preparando o Ambiente
 
+Se você acabou de clonar o repositório, não precisa criar o ambiente manualmente ou ativar o pip. Basta rodar:
 
+```bash
+uv sync
+
+```
+
+**O que este comando faz?**
+
+1. Verifica se a versão correta do Python está instalada (e instala se necessário).
+2. Cria a pasta `.venv/`.
+3. Instala todas as dependências do projeto baseadas no `uv.lock`.
+4. Remove pacotes extras que não deveriam estar lá.
 
 ---
 
-## 🎯 2. Ativando o Ambiente Virtual  
+## 🎯 2. Executando o Projeto
 
-### 🔹 No **Linux/macOS**  
-No terminal, rode:  
+Com o `uv`, você tem duas opções para rodar o Django:
+
+### 🔹 Opção A: Usando o atalho `uv run` (Recomendado)
+
+Você não precisa ativar o ambiente virtual. O `uv` gerencia isso para você em cada comando:
+
 ```bash
-  source venv/bin/activate
+uv run python manage.py runserver
+
 ```
 
-### 🔹 No **Windows (cmd ou PowerShell)**  
-No **CMD** (Prompt de Comando):  
-```cmd
-venv\Scripts\activate
-```
-No **PowerShell**:  
-```powershell
-venv\Scripts\Activate.ps1
-```
-Após ativação, você verá algo assim no terminal:  
-```bash
-(venv) user@pc:~/samu$
-```
-Isso indica que o ambiente virtual está ativo. ✅  
+### 🔹 Opção B: Ativando o ambiente (Modo Tradicional)
+
+Se preferir o terminal "clássico" com o prefixo `(.venv)`:
+
+* **Linux/macOS:** `source .venv/bin/activate`
+* **Windows:** `.venv\Scripts\activate`
 
 ---
 
-## 🎯 3. Instalando Dependências  
+## 🎯 3. Adicionando Novas Dependências
 
-Agora que o ambiente virtual está ativo, instale o Django e outras dependências do projeto:  
+Para adicionar uma nova biblioteca ao projeto (como o `django-filter`):
+
 ```bash
-pip install django
+uv add django-filter
+
 ```
-Para salvar as dependências instaladas em um arquivo:  
-```bash
-pip freeze > requirements.txt
-```
-Isso gera um arquivo `requirements.txt` com algo assim:  
-```
-Django==4.2
-```
-Agora, qualquer pessoa pode recriar o mesmo ambiente rodando:  
-```bash
-pip install -r requirements.txt
-```
+
+Isso atualizará automaticamente o `pyproject.toml` e o `uv.lock`.
 
 ---
 
-## 🎯 4. Desativando o Ambiente Virtual  
-Para sair do ambiente virtual, rode:  
-```bash
-deactivate
-```
+## 🎯 Recapitulando os Comandos (Fluxo UV Sync)
+
+| Ação | Comando |
+| --- | --- |
+| **Instalar tudo e configurar** | `uv sync` |
+| **Rodar o servidor** | `uv run python manage.py runserver` |
+| **Rodar migrações** | `uv run python manage.py migrate` |
+| **Adicionar novo pacote** | `uv add <nome>` |
+| **Atualizar todos os pacotes** | `uv lock --upgrade` |
 
 ---
 
-## 🎯 5. Ativando Automaticamente no Terminal (Opcional)  
-Se quiser ativar o **venv** automaticamente ao entrar no diretório do projeto, edite o `.bashrc` ou `.zshrc` e adicione:  
-```bash
-cd ~/samu && source venv/bin/activate
-```
-Agora, toda vez que abrir o terminal no projeto, o ambiente virtual será ativado. 🚀  
-
----
-
-## 🎯 Recapitulando os Comandos  
-```bash
-# Criar um ambiente virtual
-python -m venv venv
-
-# Ativar no Linux/macOS
-source venv/bin/activate
-
-# Ativar no Windows (CMD)
-venv\Scripts\activate
-
-# Instalar pacotes
-pip install xxx
-
-# Salvar dependências
-pip freeze > requirements.txt
-
-# Instalar dependências de um projeto existente
-pip install -r requirements.txt
-
-# Desativar o ambiente virtual
-deactivate
-```
-
+> **Nota:** Como o projeto agora usa `uv sync`, o arquivo `requirements.txt` torna-se opcional ou apenas para exportação/compatibilidade com sistemaslegados. O "coração" das dependências agora são os arquivos `pyproject.toml` e `uv.lock`.
