@@ -1,0 +1,1675 @@
+{
+	"info": {
+		"_postman_id": "4294374d-e080-4625-be0e-2388c7bd3422",
+		"name": "samu",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39268042"
+	},
+	"item": [
+		{
+			"name": "Colaborador",
+			"item": [
+				{
+					"name": "Listar Colaborador",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{authToken}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}} ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/colaborador/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"colaborador",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar por Cpf",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": "{{authToken}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}} ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/colaborador/?cpf=613.317.303-33",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"colaborador",
+								""
+							],
+							"query": [
+								{
+									"key": "cpf",
+									"value": "613.317.303-33"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Colaborador",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": "{{authToken}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}} ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"João Silva Atualizado\",\r\n  \"email\": \"joao.novo@email.com\",\r\n  \"cpf\": \"771.155.760-41\",\r\n  \"telefone\": \"(11) 88888-8888\",\r\n  \"uf\": \"RJ\",\r\n  \"cidade\": \"Rio de Janeiro\",\r\n  \"logradouro\": \"Av. Copacabana, 200\",\r\n  \"bairro\": \"Copacabana\",\r\n  \"cep\": \"22070-900\",\r\n  \"dataNascimentoReal\": \"1980-05-20\",\r\n  \"sexo\": \"M\",\r\n  \"tipoSanguineo\": \"A+\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/colaborador/2/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"colaborador",
+								"2",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar Colaborador",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": "{{authToken}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}} ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/colaborador/2/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"colaborador",
+								"2",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar Colaborador",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": "{{authToken}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}} ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"Maria Santos\",\r\n  \"email\": \"maria@email.com\",\r\n  \"cpf\": \"771.155.760-41\",\r\n  \"telefone\": \"(11) 99999-9999\",\r\n  \"uf\": \"SP\",\r\n  \"cidade\": \"São Paulo\",\r\n  \"logradouro\": \"Rua das Palmeiras, 100\",\r\n  \"bairro\": \"Vila Madalena\",\r\n  \"cep\": \"05422-010\",\r\n  \"dataNascimentoReal\": \"1985-03-15\",\r\n  \"sexo\": \"F\",\r\n  \"tipoSanguineo\": \"O+\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/colaborador/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"colaborador",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Chamados",
+			"item": [
+				{
+					"name": "1. Listar Chamados",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": "{{authToken}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}} ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/chamado",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"chamado"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7. Listar Trâmites",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}} ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/chamado/1/tramites/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"chamado",
+								"1",
+								"tramites",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3. Detalhes do Chamado",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": "{{authToken}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}} ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/chamado/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"chamado",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "8. Listar Unidades",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}} ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/chamado/1/unidades/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"chamado",
+								"1",
+								"unidades",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "9. Listar Atendimentos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}} ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/chamado/1/atendimentos/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"chamado",
+								"1",
+								"atendimentos",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "10. Buscar por Nome",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": "{{authToken}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}} ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/chamado?search=Maria",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"chamado"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "Maria"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4. Atualizar Completo",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}} ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"solicitante_nome\": \"Maria Santos Atualizada\",\r\n  \"queixa_principal\": \"Acidente de trânsito com múltiplas vítimas\",\r\n  \"uf\": \"RJ\",\r\n  \"cidade\": \"Rio de Janeiro\",\r\n  \"logradouro\": \"Av. Copacabana, 500 - próximo ao posto 6\",\r\n  \"bairro\": \"Copacabana\",\r\n  \"numero_vitimas\": 3,\r\n  \"motivo\": \"SOCORRO\",\r\n  \"latitude\": -22.9711,\r\n  \"longitude\": -43.1822,\r\n  \"observacoes\": \"Atualização: terceira vítima encontrada\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/chamado/1/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"chamado",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6. Finalizar Chamado",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": "{{authToken}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}} ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/chamado/1/finalizar/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"chamado",
+								"1",
+								"finalizar",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2. Criar Chamado",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": "{{authToken}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}} ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"solicitante_nome\": \"Maria Santos\",\r\n  \"queixa_principal\": \"Acidente de trânsito\",\r\n  \"uf\": \"RJ\",\r\n  \"cidade\": \"Rio de Janeiro\",\r\n  \"logradouro\": \"Av. Copacabana, 500\",\r\n  \"bairro\": \"Copacabana\",\r\n  \"numero_vitimas\": 2,\r\n  \"motivo\": \"TRANSFERENCIA\",\r\n  \"latitude\": -22.9711,\r\n  \"longitude\": -43.1822,\r\n  \"observacoes\": \"Vítimas conscientes, uma com suspeita de fratura\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/chamado/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"chamado",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5. Atualizar Parcial",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": "{{authToken}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}} ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"numero_vitimas\": 4,\r\n  \"observacoes\": \"Nova atualização: quarta vítima localizada\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/chamado/1/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"chamado",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pessoa",
+			"item": [
+				{
+					"name": "1. Listar Pessoas",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": "{{authToken}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/pessoa",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"pessoa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6. Listar Atendimentos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/pessoa/1/atendimentos/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"pessoa",
+								"1",
+								"atendimentos",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6. Listar Chamados",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/pessoa/1/chamados/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"pessoa",
+								"1",
+								"chamados",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "9. Filtrar por CPF",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/pessoa/?cpf=123.456.789-00",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"pessoa",
+								""
+							],
+							"query": [
+								{
+									"key": "cpf",
+									"value": "123.456.789-00"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3. Detalhes da Pessoa",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/pessoa/4",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"pessoa",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4. Atualizar Pessoa",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"João Silva Santos Atualizado\",\r\n  \"email\": \"joao.silva.novo@email.com\",\r\n  \"cpf\": \"812.188.160-90\",\r\n  \"rg\": \"12.345.678-2\",\r\n  \"data_nascimento\": \"1985-03-15\",\r\n  \"telefone\": \"(11) 99999-8888\",\r\n  \"uf\": \"SP\",\r\n  \"cidade\": \"São Paulo\",\r\n  \"cep\": \"01234-567\",\r\n  \"logradouro\": \"Rua das Flores, 456\",\r\n  \"numero\": \"456\",\r\n  \"complemento\": \"Apto 78\",\r\n  \"bairro\": \"Centro\",\r\n  \"sexo\": \"M\",\r\n  \"estado_civil\": \"CASADO\",\r\n  \"profissao\": \"Engenheiro Senior\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/pessoa/1/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"pessoa",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2. Criar Pessoa",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"João Silva Santos\",\r\n  \"email\": \"joao.silva@email.com\",\r\n  \"cpf\": \"729.284.020-55\",\r\n  \"rg\": \"12.345.678-9\",\r\n  \"data_nascimento\": \"1985-03-15\",\r\n  \"telefone\": \"(11) 98765-4321\",\r\n  \"uf\": \"SP\",\r\n  \"cidade\": \"São Paulo\",\r\n  \"cep\": \"01234-567\",\r\n  \"logradouro\": \"Rua das Flores, 123\",\r\n  \"numero\": \"123\",\r\n  \"complemento\": \"Apto 45\",\r\n  \"bairro\": \"Centro\",\r\n  \"sexo\": \"M\",\r\n  \"estado_civil\": \"SOLTEIRO\",\r\n  \"profissao\": \"Engenheiro\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/pessoa/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"pessoa",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Unidade",
+			"item": [
+				{
+					"name": "Listar unidades",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": "{{authToken}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/unidade/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"unidade",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Detalhes da Unidade",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/unidade/1/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"unidade",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Unidades Disponíveis",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/unidade/disponiveis/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"unidade",
+								"disponiveis",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2.2 Estatísticas das Unidades",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/unidade/estatisticas/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"unidade",
+								"estatisticas",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2.4 Listar Chamados da Unidade",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/unidade/1/chamados/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"unidade",
+								"1",
+								"chamados",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3.1 Filtrar por Tipo",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/unidade/?tipo=USB",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"unidade",
+								""
+							],
+							"query": [
+								{
+									"key": "tipo",
+									"value": "USB"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3.2 Filtrar por Status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/unidade/?status=DISPONIVEL",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"unidade",
+								""
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "DISPONIVEL"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1.4 Atualizar Unidade Completo (PUT)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"SAMU 192 - Unidade Alpha Atualizada\",\n  \"tipo\": \"USA\",\n  \"placa\": \"XYZ-5678\",\n  \"status\": \"EM_OCORRENCIA\",\n  \"base_operacional\": 1,\n  \"fabricante\": \"Volkswagen\",\n  \"modelo\": \"Crafter\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/unidade/1/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"unidade",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1.2 Criar Nova Unidade",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"SAMU 192 - Unidade Alpha\",\n  \"tipo\": \"USB\",\n  \"placa\": \"ABC-1234\",\n  \"status\": \"DISPONIVEL\",\n  \"base_operacional\": 1,\n  \"fabricante\": \"Mercedes-Benz\",\n  \"modelo\": \"Sprinter 415\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/unidade/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"unidade",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2.3 Alterar Status da Unidade",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"EM_LIMPEZA_TERMINAL\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/unidade/1/alterar_status/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"unidade",
+								"1",
+								"alterar_status",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1.5 Atualizar Unidade Parcial (PATCH)",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"MANUTENCAO\",\n  \"placa\": \"NEW-9999\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/unidade/1/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"unidade",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Fluxo",
+			"item": [
+				{
+					"name": "1.1 Listar Todos os Fluxos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/fluxo/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"fluxo",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2.5 Sequência Completa de Fluxos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/fluxo/sequencia_completa/?central_id=1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"fluxo",
+								"sequencia_completa",
+								""
+							],
+							"query": [
+								{
+									"key": "central_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1.3 Obter Detalhes do Fluxo",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/fluxo/9/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"fluxo",
+								"9",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2.4 Próximo Setor no Fluxo",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/fluxo/proximo_setor/?central_id=1&setor_atual_id=1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"fluxo",
+								"proximo_setor",
+								""
+							],
+							"query": [
+								{
+									"key": "central_id",
+									"value": "1"
+								},
+								{
+									"key": "setor_atual_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2.1 Filtrar por Central",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/fluxo/por_central/?central_id=1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"fluxo",
+								"por_central",
+								""
+							],
+							"query": [
+								{
+									"key": "central_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2.2 Filtrar por Setor",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/fluxo/por_setor/?setor_id=1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"fluxo",
+								"por_setor",
+								""
+							],
+							"query": [
+								{
+									"key": "setor_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1.4 Atualizar Fluxo Completo",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"central\": 1,\n  \"setor\": 1,\n  \"ordem\": 2\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/fluxo/9/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"fluxo",
+								"9",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1.6 Excluir Fluxo",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/fluxo/1/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"fluxo",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2.3 Alterar Ordem do Fluxo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"ordem\": 5\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/fluxo/9/alterar_ordem/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"fluxo",
+								"9",
+								"alterar_ordem",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1.2 Criar Novo Fluxo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"central\": 1,\n  \"setor\": 1,\n  \"ordem\": 1\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/fluxo/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"fluxo",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2.6 Reordenar Múltiplos Fluxos",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fluxos\": [\n    {\"id\": 13, \"ordem\": 2},\n    {\"id\": 10, \"ordem\": 1},\n    {\"id\": 11, \"ordem\": 4},\n    {\"id\": 12, \"ordem\": 3}\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/{{baseId}}/fluxo/reordenar/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{baseId}}",
+								"fluxo",
+								"reordenar",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "in",
+				"value": "header",
+				"type": "string"
+			},
+			{
+				"key": "value",
+				"value": "3488087f806eb91f918f934d4cc8895471b5ac58",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "Token",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8000/api",
+			"type": "string"
+		},
+		{
+			"key": "authToken",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "baseId",
+			"value": "1",
+			"type": "string"
+		}
+	]
+}

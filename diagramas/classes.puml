@@ -1,0 +1,298 @@
+@startuml
+
+' Configurações de estilo
+skinparam classFontSize 14
+skinparam nodesep 40
+skinparam ranksep 40
+skinparam classBackgroundColor #F9F9F9
+skinparam classBorderColor #444444
+skinparam classArrowColor #555555
+skinparam noteBackgroundColor #FFF9C4
+skinparam noteBorderColor #E0E0E0
+skinparam noteFontSize 12
+
+' Classes principais
+class Samu.Base {
+    - nome: string
+    - central: Base
+    - responsavel: Django.Auth.User
+    - estado: string
+    - cidade: string
+    - logradouro: string
+    - numero: string
+    - complemento: string
+    - bairro: string
+}
+
+class Samu.Setor {
+    - base: Base
+    - ativo: boolean
+    - membros: Django.Auth.user
+}
+
+class Samu.Notificacao {
+    - emissor: Django.Auth.User
+    - destinatario: Django.Auth.User
+    - titulo: string
+    - mensagem: text
+    - dataHora: datetime
+    - url: string
+    - lido: boolean
+    - dataLeitura: datetime
+    - chamado: Samu.Chamado
+}
+
+class Samu.Pessoa {
+    - usuario: Django.Auth.User
+    - telefone: string
+    - nome: string
+    - email: string
+    - RG: string
+    - CPF: string
+    - dataNascimentoReal: datetime
+    - dataNascimentoEstimada: datetime
+    - sexo: string
+    - estadoCivil: string
+    - nacionalidade: string
+    - naturalidade: string
+    - telefoneCelular: string
+
+    ..Endereço..
+    - estado: string
+    - cidade: string
+    - logradouro: string
+    - numero: string
+    - complemento: string
+    - bairro: string
+    - cep: string
+
+    ..Informações familiares..
+    - nomeMae: string
+    - nomePai: string
+    - telefoneMae: string
+    - telefonePai: string
+    - telefoneResponsavel: string
+    - telefoneContato: string
+    - telefoneRecado: string
+
+    ..Informações clinicas..
+    - tipoSanguineo: string
+    - alergias: string
+    - doencasPreExistentes: string
+    - medicamentosEmUso: string
+
+    ..Deficiencias..
+    - deficienciaVisual: boolean
+    - deficienciaAuditiva: boolean
+    - deficienciaMotora: boolean
+    - deficienciaIntelectual: boolean
+    - observacoes: text
+    ....
+    - criador_por: Django.Auth.User
+    - criado_em: datetime
+    - baseCadastro: Base
+}
+
+class Samu.AtendimentoPessoa{
+    - chamado: Chamado
+    - paciente: Pessoa
+    - nomeProvisorio: string
+    - acompanhante: Pessoa    
+    - tipo: string
+    - risco: string
+    - queixa: text
+    - pulso: string
+    - pa: string
+    - fr: string
+    - so2: string
+    - temperatura: string
+    - glicemia: string
+    - situacaoDoLocal: string
+    - situacaoVtima: string
+    - solitacaoDeApoio: boolean
+    - usoCinto: string
+    - usoCapacete: string
+    - acidenteTrabalho: string
+    - dataHoraChegada: datetime
+    - dataHoraSaida: datetime
+    - dataHoraChegadaDestino: datetime
+    - dataHoraLiberacaoUnidade: datetime
+    - observacoes: text
+    - lesaoTraumatica: boolean
+    - descLesaoTraumatica: string
+    - choqueHipovolemico: boolean
+    - pele: string
+    - queimadura: boolean
+    - percQueimadura: float
+    - tipoQueimadura: string
+    - grauQueimadura: string
+    - glasgow: string
+    - dilacaoPupilar: string
+    - intercorreciaTransporte: boolean
+    - descrIntercorreciaTransporte: string
+    - destinoPaciente: string
+    - tipoReceptor: string
+    - nomeReceptor: string
+    - numRegistroConselho: string
+    - tipoEvolucao: string
+    - evolucao: text
+    - conduta: string
+    - condicaoPaciente: string
+    - diagnosticoMedico: string
+    - ginecoObstetrico: boolean
+}
+
+class Samu.Chamado {
+    - solicitante: Pessoa
+    - relacaoVitima: string
+    - origem: string
+    - logradouro: string
+    - numero: string
+    - complemento: string
+    - bairro: string
+    - cidade: string
+    - estado: string
+    - pontoReferencia: string
+    - observacoes: string
+    - motivo: string
+    - numeroVitimas: int
+    - base: Base
+    - status: string
+    - inicidente: boolean
+    - descricaoIncidente: string
+    - achadosClinicos: text
+    - condutaMedica: text
+    - apoioSolicitado: string
+    - dataHora: datetime
+    - dataHoraLiberacao: datetime
+    - dataHoraSaida: datetime
+    - dataHoraChegada: datetime
+    - dataHoraRegulacao: datetime
+}
+
+class Samu.Forum {
+    - usuario: Django.Auth.User
+    - chamado: Chamado
+    - mensagem: text
+    - dataHora: datetime
+    - midia: blob
+}
+
+class Samu.TramiteChamado {
+    - chamado: Chamado
+    - usuario: Django.Auth.User
+    - origem: Setor
+    - destino: Setor
+    - despacho: text
+    - dataHora: datetime
+    - status: string
+}
+
+class Samu.Unidade{
+    - nome: string
+    - central: Base
+    - tipo: string
+    - fabricante: string
+    - modelo: string
+    - ano: int
+    - cor: string
+    - chassi: string
+    - renavam: string
+    - placa: string
+    - status: string
+    - lotacao: int
+}
+
+class Samu.Fluxo{
+    - central: Base
+    - setor: Setor
+    - ordem: int
+    - obs: string
+}
+
+class Samu.UnidadeChamado {
+    - chamado: Chamado
+    - unidade: Unidade
+    - alocado_por: Django.Auth.User
+    - alocado_em: datetime
+    - status: string
+}
+
+class Samu.Tracking{
+    - unidadeChamado: UnidadeChamado
+    - latitude: float
+    - longitude: float
+    - velocidade: float
+    - dataHora: timestamp    
+}
+
+' Relacionamentos
+' Herdado do Django.Auth.User
+class Django.Auth.User {
+    - username: string
+    - password: string
+    - email: string
+    - first_name: string
+    - last_name: string
+    - is_active: boolean
+    - is_staff: boolean
+    - is_superuser: boolean
+}
+class Django.Auth.Group {
+    - name: string
+    - permissions: Django.Auth.Permission
+}
+class Django.Auth.Permission {
+    - content_type: Django.Contrib.ContentType
+    - codename: string
+    - name: string
+}
+class Django.Contrib.ContentType {
+    - app_label: string
+    - model: string
+}
+
+' Relacionamentos
+Django.Auth.User "1" -- "n" Django.Auth.Group : "membro"
+Django.Auth.Group "n" -- "n" Django.Auth.Permission : "possui"
+Django.Auth.Permission "1" -- "N" Django.Contrib.ContentType : "pertence a"
+Django.Auth.Permission "N" -- "1" Django.Auth.User : "pertence a"
+
+Django.Auth.User "n" -- "n" Setor : "membros"
+
+Base "1" -- "1" Base : "Central"
+Base "n" -- "1" Django.Auth.User : "responsável"
+
+Setor "n" -- "1" Base : "pertence a"
+Setor "n" --|> "1" Django.Auth.Group : "herda"
+
+
+Pessoa "1" -- "n" AtendimentoPessoa : "recebe"
+Pessoa "1" -- "1" Chamado : "solicitante"
+Pessoa "1" .. "1" Django.Auth.User : "usuario"
+
+Chamado "1" -- "n" AtendimentoPessoa : "gera"
+Chamado "n" -- "1" Base : "base"
+Chamado "1" -- "n" Forum : "discussão"
+Chamado "1" -- "n" TramiteChamado : "histórico"
+
+Fluxo "1" -- "1" Base : "pertence a"
+Fluxo "1" -- "n" Setor : "tramita por"
+
+Tracking "n" -- "1" UnidadeChamado : "deslocamento"
+
+Forum "n" -- "1" Django.Auth.User : "postado por"
+
+TramiteChamado "n" -- "1" Django.Auth.User : "enviado/recebido por"
+TramiteChamado "n" -- "n" Setor : "origem/destino"
+
+Unidade "n" -- "1" Base : "pertence a"
+UnidadeChamado "n" -- "1" Chamado : "atende"
+UnidadeChamado "n" -- "1" Unidade : "alocada"
+
+AtendimentoPessoa "1" .. "1" Unidade : "atende"
+
+Notificacao "1" -- "1" Django.Auth.User : "recebe/envia"
+Notificacao "1" .. "1" Chamado : "referente a"
+
+@enduml
