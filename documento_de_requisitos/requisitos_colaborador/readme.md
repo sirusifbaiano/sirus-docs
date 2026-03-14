@@ -12,4 +12,5 @@ Clique em um requisito para visualizar seu conteúdo completo.
 | [RF_CO_005](./RF_CO_005.md) | Desativar Colaborador | O sistema deve permitir desativar um Colaborador. |
 ---
 
-Para detalhes sobre campos e estrutura de dados, consulte o arquivo [DD_PE.md](./DD_PE.md).
+Para detalhes sobre campos e estrutura de dados, consulte os arquivos [DD_CO.md](./DD_CO.md) para os campos de colaboradores e
+[DD_PE.md](../requisitos_pessoa/DD_PE.md) para os campos herdados de Pessoa.

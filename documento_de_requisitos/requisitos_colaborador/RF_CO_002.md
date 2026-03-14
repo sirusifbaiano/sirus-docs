@@ -29,4 +29,5 @@
 - RNF_002: O sistema deve ter recursos de acessibilidade.
 
 **Dicionário de dados:**
-Para mais detalhes sobre os campos e estrutura de dados, consulte o arquivo [DD_PE.md](./DD_PE.md.md).
+Para detalhes sobre campos e estrutura de dados, consulte os arquivos [DD_CO.md](./DD_CO.md) para os campos de colaboradores e
+[DD_PE.md](../requisitos_pessoa/DD_PE.md) para os campos herdados de Pessoa.

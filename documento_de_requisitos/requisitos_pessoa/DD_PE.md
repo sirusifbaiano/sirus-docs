@@ -1,6 +1,8 @@
 ## Dicionários de dados do modelo Pessoa
 
-**Descrição:** Este dicionário de dados descreve os atributos do modelo `Pessoa`, que representa os dados pessoais, clínicos e de contato de indivíduos, vinculados opcionalmente a um usuário do sistema, pessoas com usuário associado são **Colaboradores**.
+**Descrição:** Este dicionário de dados descreve os atributos do modelo `Pessoa`, que representa a base 
+de dados fundamentais de qualquer indivíduo registrado no sistema. 
+Este modelo atua como **classe pai** para especializações, sendo a base para o modelo `Colaborador`.
 
 | Nome do Atributo         | Tipo de Dado  | Descrição                                         | Restrições                                                                                 |
 | ------------------------ | ------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------ |
