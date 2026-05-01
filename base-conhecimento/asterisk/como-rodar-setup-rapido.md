@@ -4,10 +4,12 @@ Este documento explica como executar a query [setup-rapido-ramais-samu.sql](setu
 
 Use este processo apenas em desenvolvimento ou homologacao controlada. A query cria senhas simples para facilitar testes locais.
 
+Importante: no momento, o projeto nao cria ramais externos automaticamente. O `infra/telefone-externo/script.js` usa um pool fixo de `7001` a `7010`, senha `12345678`, e disca `192`. A criacao automatica de identidade temporaria por paciente e uma funcionalidade futura.
+
 ## O que a query cria
 
 - tabela `queues`: fila `fila-tarm`;
-- tabela `ps_aors`: AORs dos ramais e identidades web;
+- tabela `ps_aors`: AORs dos ramais internos e do pool externo de teste;
 - tabela `ps_auths`: usuarios e senhas SIP;
 - tabela `ps_endpoints`: endpoints WebRTC;
 - tabela `queue_members`: TARMs `2001` e `2002` dentro da fila.
@@ -16,11 +18,11 @@ Credenciais criadas:
 
 | Uso | Usuario | Senha | Contexto |
 | --- | --- | --- | --- |
-| TARM 1 | `2001` | `2001` | `samu-tarm` |
-| TARM 2 | `2002` | `2002` | `samu-tarm` |
-| Regulacao | `2101` | `2101` | `samu-equipe` |
-| Radio | `2102` | `2102` | `samu-equipe` |
-| Paciente/site teste | `web-0001` ate `web-0010` | `web0001` ate `web0010` | `site-publico` |
+| TARM 1 | `2001` | `12345678` | `samu-tarm` |
+| TARM 2 | `2002` | `12345678` | `samu-tarm` |
+| Regulacao | `2101` | `12345678` | `samu-equipe` |
+| Radio | `2102` | `12345678` | `samu-equipe` |
+| Telefone externo de teste | `7001` ate `7010` | `12345678` | `site-publico` |
 
 ## Pre-requisitos
 
@@ -112,25 +114,25 @@ docker exec asterisk-dev asterisk -rx "dialplan show site-publico"
 
 ```text
 Ramal: 2001
-Senha: 2001
+Senha: 12345678
 ```
 
 3. Em outro navegador, aba anonima ou outro dispositivo, registre o TARM 2:
 
 ```text
 Ramal: 2002
-Senha: 2002
+Senha: 12345678
 ```
 
-4. Para simular visitante/site externo, registre uma identidade web:
+4. Para simular o `infra/telefone-externo`, registre um dos ramais externos do pool ou abra a propria pagina em `samu/infra/telefone-externo/index.html`:
 
 ```text
-Usuario: web-0001
-Senha: web0001
-Destino: 9000
+Ramal/usuario: 7001
+Senha: 12345678
+Destino discado pelo telefone-externo: 192
 ```
 
-5. Ao ligar para `9000`, a chamada deve entrar em `fila-tarm` e tocar em `2001` ou `2002`.
+5. Ao ligar para `192`, o contexto `site-publico` redireciona para a fila `fila-tarm` e deve tocar em `2001` ou `2002`.
 
 ## Se der erro
 
@@ -171,4 +173,4 @@ docker exec asterisk-dev asterisk -rx "queue show fila-tarm"
 
 ---
 
-Navegacao: [Anterior: Query de configuracao rapida para testes](setup-rapido-ramais-samu.sql) | [Indice](README.md) | [Proximo: Visao geral antiga](visao-geral.md)
+Navegacao: [Anterior: Referencia consolidada](visao-geral.md) | [Indice](README.md) | [Proximo: Query de configuracao rapida para testes](setup-rapido-ramais-samu.sql)

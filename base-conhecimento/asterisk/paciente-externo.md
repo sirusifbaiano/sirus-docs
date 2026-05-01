@@ -2,13 +2,22 @@
 
 Paciente externo nao deve receber ramal interno real.
 
-O correto e criar uma identidade tecnica temporaria para a sessao do site.
+No projeto atual, o `infra/telefone-externo` ainda nao cria ramais automaticamente. Ele usa um pool fixo de ramais externos de teste:
+
+```text
+7001 ate 7010
+senha: 12345678
+numero discado: 192
+contexto: site-publico
+```
+
+O correto para uma versao futura e criar uma identidade tecnica temporaria para cada sessao do site. Essa evolucao ainda nao esta implementada neste momento.
 
 ## Por que nao usar ramal interno
 
 Ramais como `2001`, `2002` e `2030` representam pessoas ou postos internos. Se um paciente externo recebe um desses numeros, a central fica mais dificil de auditar e pode expor permissoes indevidas.
 
-Use nomes como:
+Para a funcionalidade futura, use nomes tecnicos como:
 
 ```text
 web-483921
@@ -16,30 +25,38 @@ web-a7f31c
 sessao-120394
 ```
 
-## Fluxo recomendado
+## Fluxo atual do telefone-externo
+
+1. Paciente abre o site externo.
+2. O JavaScript em `samu/infra/telefone-externo/script.js` sorteia um ramal entre `7001` e `7010`.
+3. Browser registra no Asterisk com senha `12345678`.
+4. Browser chama `192`.
+5. Dialplan `site-publico` redireciona para `9000`.
+6. `9000` manda para `fila-tarm`.
+
+## Fluxo futuro recomendado
 
 1. Paciente abre o site externo.
 2. Site pede uma credencial temporaria ao backend.
-3. Backend cria ou reserva `web-*`.
+3. Backend cria ou reserva uma identidade de sessao.
 4. Backend grava `ps_aors`, `ps_auths` e `ps_endpoints`.
 5. Browser registra no Asterisk com JsSIP.
-6. Browser chama `9000`.
-7. Dialplan `site-publico` manda para `fila-tarm`.
-8. Ao terminar ou ficar ocioso, backend expira a identidade.
+6. Browser chama o destino publico configurado.
+7. Ao terminar ou ficar ocioso, backend expira a identidade.
 
-## Configuracao do endpoint temporario
+## Configuracao atual do endpoint externo
 
 Tabela `ps_endpoints`:
 
-Onde criar: backend do SIRUS ou Django Admin de telefonia, cadastro de endpoints. No codigo, o modelo esta em `samu/code/telefonia/models.py`, classe `PsEndpoints`.
+Onde criar: hoje, manualmente pelo Django Admin de telefonia ou pela query [setup-rapido-ramais-samu.sql](setup-rapido-ramais-samu.sql). No codigo, o modelo esta em `samu/code/telefonia/models.py`, classe `PsEndpoints`.
 
 Todos os campos abaixo pertencem a essa tabela. Os campos de NAT/WebRTC, como `direct_media`, `ice_support`, `rewrite_contact`, `rtp_symmetric`, `rtcp_mux` e `bundle`, tambem ficam aqui.
 
 ```text
-id: web-483921
-transport: transport-wss
-aors: web-483921
-auth: web-483921
+id: 7001
+transport: transport-ws
+aors: 7001
+auth: 7001
 context: site-publico
 disallow: all
 allow: opus,ulaw
@@ -56,28 +73,30 @@ bundle: yes
 
 Tabela `ps_auths`:
 
-Onde criar: backend do SIRUS ou Django Admin de telefonia, cadastro de autenticacoes. No codigo, classe `PsAuths`.
+Onde criar: hoje, manualmente pelo Django Admin de telefonia ou pela query de setup rapido. No codigo, classe `PsAuths`.
 
 ```text
-id: web-483921
+id: 7001
 auth_type: userpass
-username: web-483921
-password: senha_aleatoria_temporaria
+username: 7001
+password: 12345678
 ```
 
 Tabela `ps_aors`:
 
-Onde criar: backend do SIRUS ou Django Admin de telefonia, cadastro de AORs. No codigo, classe `PsAors`.
+Onde criar: hoje, manualmente pelo Django Admin de telefonia ou pela query de setup rapido. No codigo, classe `PsAors`.
 
 ```text
-id: web-483921
+id: 7001
 max_contacts: 1
 remove_existing: yes
 ```
 
 ## Tempo de vida
 
-Sugestao:
+No estado atual, os ramais externos `7001` a `7010` sao fixos para teste e nao expiram automaticamente.
+
+Para a funcionalidade futura de identidade temporaria, a sugestao e:
 
 - criada e nao registrada: expirar em 2 minutos;
 - registrada sem chamada: expirar em 10 minutos;

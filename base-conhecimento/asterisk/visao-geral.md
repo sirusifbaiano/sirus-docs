@@ -11,7 +11,9 @@ O Asterisk funciona como central telefonica do sistema. Ele recebe conexoes SIP/
 No projeto atual, existem dois publicos principais:
 
 - equipe interna/TARM, usando softphone autenticado por ramal;
-- paciente ou visitante do site externo, usando uma identidade temporaria restrita.
+- paciente ou visitante do site externo, usando o telefone externo em `infra/telefone-externo`.
+
+O telefone externo, no estado atual, sorteia um ramal do pool `7001` ate `7010`, registra com a senha `12345678` e chama `192`. A criacao automatica de identidade temporaria por paciente ainda e uma funcionalidade futura.
 
 ## Arquivos principais
 
@@ -132,11 +134,18 @@ Para equipe TARM, o ideal e cada usuario ter um ramal fixo vinculado ao cadastro
 
 ## Paciente externo
 
-Paciente nao deve receber um ramal real da central. O modelo recomendado e entregar uma credencial WebRTC temporaria, usada apenas para iniciar chamada para o SAMU.
+Paciente nao deve receber um ramal real da central. No estado atual do projeto, porem, o `infra/telefone-externo` usa um pool fixo de ramais externos de teste:
 
-Do ponto de vista tecnico, o Asterisk ainda precisa de uma identidade SIP para autenticar o navegador. Mas essa identidade deve ser tratada como sessao temporaria, nao como ramal humano.
+```text
+7001 ate 7010
+senha: 12345678
+numero discado: 192
+contexto: site-publico
+```
 
-Formato recomendado:
+Do ponto de vista tecnico, o Asterisk ainda precisa de uma identidade SIP para autenticar o navegador. Hoje essa identidade vem do pool fixo acima. A criacao automatica de identidade temporaria por paciente ainda e uma funcionalidade futura.
+
+Formato recomendado para a funcionalidade futura:
 
 ```text
 web-483921
@@ -164,14 +173,14 @@ Uma identidade temporaria por paciente e melhor que um endpoint unico para todo 
 
 ## Modelo de lease para paciente
 
-O backend pode gerenciar um "emprestimo" temporario de identidade:
+Este modelo ainda nao esta implementado. Futuramente, o backend pode gerenciar um "emprestimo" temporario de identidade:
 
 1. Paciente abre o site externo.
 2. Frontend solicita credenciais temporarias ao backend.
 3. Backend cria ou reserva uma identidade `web-*`.
 4. Backend grava `ps_endpoint`, `ps_auth` e `ps_aor` com contexto `site-publico`.
 5. Browser registra no Asterisk usando JsSIP.
-6. Browser chama `9000`.
+6. Browser chama o destino publico configurado.
 7. Ao terminar, ficar ocioso ou perder heartbeat, a identidade expira.
 
 Prazos sugeridos:
@@ -184,16 +193,16 @@ Prazos sugeridos:
 
 O IP pode ser salvo como informacao auxiliar, mas nao deve ser a chave principal. Muitas pessoas podem compartilhar o mesmo IP por NAT, Wi-Fi publico ou rede movel.
 
-## Configuracao recomendada para identidade web temporaria
+## Configuracao atual do telefone externo
 
 Endpoint:
 
 ```text
-id: web-483921
-transport: transport-wss em producao ou transport-ws em dev
+id: 7001
+transport: transport-ws em desenvolvimento
 context: site-publico
-aors: web-483921
-auth: web-483921
+aors: 7001
+auth: 7001
 webrtc: yes
 media_encryption: dtls
 direct_media: no
@@ -209,22 +218,22 @@ allow: opus,ulaw
 Auth:
 
 ```text
-id: web-483921
+id: 7001
 auth_type: userpass
-username: web-483921
-password: senha_aleatoria_temporaria
+username: 7001
+password: 12345678
 ```
 
 AOR:
 
 ```text
-id: web-483921
+id: 7001
 max_contacts: 1
 remove_existing: yes
 qualify_frequency: opcional
 ```
 
-Para uma identidade temporaria por paciente, `max_contacts=1` e suficiente. Se fosse usado um endpoint unico para todos os visitantes, seria necessario `max_contacts` maior e `remove_existing=no`, mas esse modelo e menos isolado.
+Para o pool fixo atual, cada ramal externo tem seu proprio AOR. Para uma identidade temporaria futura por paciente, `max_contacts=1` tambem e suficiente.
 
 ## Fila TARM
 
@@ -256,8 +265,9 @@ Regras recomendadas:
 
 - Paciente externo sempre no contexto `site-publico`.
 - `site-publico` nao deve incluir `samu-internal` nem `samu-saida`.
-- Credenciais temporarias devem expirar.
-- Senhas temporarias devem ser aleatorias e curtas em tempo de vida, nao simples em valor.
+- No estado atual, ramais externos de teste `7001` a `7010` usam senha padrao `12345678`.
+- Na funcionalidade futura, credenciais temporarias devem expirar.
+- Na funcionalidade futura, senhas temporarias devem ser aleatorias e curtas em tempo de vida.
 - WSS com certificado valido deve ser obrigatorio em producao.
 - Monitorar tentativas de registro falhas.
 - Evitar expor ramais internos ao site publico.
@@ -315,7 +325,8 @@ Provavel causa:
 
 Correcao recomendada:
 
-- usar uma identidade temporaria por paciente (`web-*`), cada uma com seu proprio AOR.
+- no estado atual, usar ramais diferentes dentro do pool `7001` a `7010`;
+- na funcionalidade futura, usar uma identidade temporaria por paciente, cada uma com seu proprio AOR.
 
 ### Paciente consegue tentar discar outros numeros
 
@@ -327,14 +338,20 @@ Verificar:
 
 ## Decisao arquitetural
 
-Para o site externo, a solucao preferida e:
+Para o site externo, o fluxo atual do projeto e:
 
 ```text
-Paciente -> credencial temporaria web-* -> contexto site-publico -> 9000 -> fila-tarm -> TARM
+Paciente -> telefone-externo -> ramal 7001-7010 -> site-publico -> 192 -> 9000 -> fila-tarm -> TARM
 ```
 
-Essa abordagem preserva a simplicidade para o paciente, evita expor ramais internos e permite controle tecnico por sessao.
+Esse pool fixo existe para teste e simulacao do telefone externo. A evolucao preferida para producao e:
+
+```text
+Paciente -> credencial temporaria -> contexto site-publico -> fila-tarm -> TARM
+```
+
+A evolucao futura preserva a simplicidade para o paciente, evita expor ramais internos e permite controle tecnico por sessao. Ela ainda nao esta implementada no projeto.
 
 ---
 
-Navegacao: [Anterior: Como rodar a query de setup rapido](como-rodar-setup-rapido.md) | [Indice](README.md)
+Navegacao: [Anterior: Operacao e diagnostico](operacao-diagnostico.md) | [Indice](README.md) | [Proximo: Como rodar a query de setup rapido](como-rodar-setup-rapido.md)

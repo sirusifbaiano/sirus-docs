@@ -93,7 +93,8 @@ varios pacientes usando o mesmo endpoint/AOR com max_contacts=1
 Correcao:
 
 ```text
-criar uma identidade web-* por paciente/sessao
+estado atual: usar ramais externos diferentes dentro do pool 7001-7010
+evolucao futura: criar uma identidade temporaria por paciente/sessao
 ```
 
 ## Problema: paciente consegue chamar numero indevido
@@ -106,4 +107,4 @@ Verificar:
 
 ---
 
-Navegacao: [Anterior: Paciente externo e identidade temporaria](paciente-externo.md) | [Indice](README.md) | [Proximo: Query de configuracao rapida para testes](setup-rapido-ramais-samu.sql)
+Navegacao: [Anterior: Paciente externo e identidade temporaria](paciente-externo.md) | [Indice](README.md) | [Proximo: Referencia consolidada](visao-geral.md)

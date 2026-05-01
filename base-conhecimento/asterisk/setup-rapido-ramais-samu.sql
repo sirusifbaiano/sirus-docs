@@ -6,14 +6,15 @@
   - a fila TARM: fila-tarm;
   - dois ramais TARM: 2001 e 2002;
   - dois membros da fila TARM: PJSIP/2001 e PJSIP/2002;
-  - dez identidades externas de teste: web-0001 ate web-0010;
+  - dez ramais externos de teste usados pelo infra/telefone-externo: 7001 ate 7010;
   - um ramal de regulacao: 2101;
   - um ramal de radio: 2102.
 
   Observacoes:
   - Use apenas em ambiente de desenvolvimento/teste.
   - As senhas sao simples de proposito para facilitar teste local.
-  - Em producao, use senhas fortes e nao use identidades web fixas.
+  - Em producao, use senhas fortes e nao use pool fixo compartilhado.
+  - A criacao automatica de ramais/identidades externas ainda e futura.
   - Depois de rodar, recarregue o Asterisk:
       docker exec asterisk-dev asterisk -rx "pjsip reload"
       docker exec asterisk-dev asterisk -rx "queue reload all"
@@ -87,16 +88,16 @@ VALUES
     ('2002', 1, 'yes', 60),
     ('2101', 1, 'yes', 60),
     ('2102', 1, 'yes', 60),
-    ('web-0001', 1, 'yes', 60),
-    ('web-0002', 1, 'yes', 60),
-    ('web-0003', 1, 'yes', 60),
-    ('web-0004', 1, 'yes', 60),
-    ('web-0005', 1, 'yes', 60),
-    ('web-0006', 1, 'yes', 60),
-    ('web-0007', 1, 'yes', 60),
-    ('web-0008', 1, 'yes', 60),
-    ('web-0009', 1, 'yes', 60),
-    ('web-0010', 1, 'yes', 60)
+    ('7001', 1, 'yes', 60),
+    ('7002', 1, 'yes', 60),
+    ('7003', 1, 'yes', 60),
+    ('7004', 1, 'yes', 60),
+    ('7005', 1, 'yes', 60),
+    ('7006', 1, 'yes', 60),
+    ('7007', 1, 'yes', 60),
+    ('7008', 1, 'yes', 60),
+    ('7009', 1, 'yes', 60),
+    ('7010', 1, 'yes', 60)
 ON CONFLICT (id) DO UPDATE SET
     max_contacts = EXCLUDED.max_contacts,
     remove_existing = EXCLUDED.remove_existing,
@@ -109,20 +110,20 @@ ON CONFLICT (id) DO UPDATE SET
 
 INSERT INTO ps_auths (id, auth_type, username, password)
 VALUES
-    ('2001', 'userpass', '2001', '2001'),
-    ('2002', 'userpass', '2002', '2002'),
-    ('2101', 'userpass', '2101', '2101'),
-    ('2102', 'userpass', '2102', '2102'),
-    ('web-0001', 'userpass', 'web-0001', 'web0001'),
-    ('web-0002', 'userpass', 'web-0002', 'web0002'),
-    ('web-0003', 'userpass', 'web-0003', 'web0003'),
-    ('web-0004', 'userpass', 'web-0004', 'web0004'),
-    ('web-0005', 'userpass', 'web-0005', 'web0005'),
-    ('web-0006', 'userpass', 'web-0006', 'web0006'),
-    ('web-0007', 'userpass', 'web-0007', 'web0007'),
-    ('web-0008', 'userpass', 'web-0008', 'web0008'),
-    ('web-0009', 'userpass', 'web-0009', 'web0009'),
-    ('web-0010', 'userpass', 'web-0010', 'web0010')
+    ('2001', 'userpass', '2001', '12345678'),
+    ('2002', 'userpass', '2002', '12345678'),
+    ('2101', 'userpass', '2101', '12345678'),
+    ('2102', 'userpass', '2102', '12345678'),
+    ('7001', 'userpass', '7001', '12345678'),
+    ('7002', 'userpass', '7002', '12345678'),
+    ('7003', 'userpass', '7003', '12345678'),
+    ('7004', 'userpass', '7004', '12345678'),
+    ('7005', 'userpass', '7005', '12345678'),
+    ('7006', 'userpass', '7006', '12345678'),
+    ('7007', 'userpass', '7007', '12345678'),
+    ('7008', 'userpass', '7008', '12345678'),
+    ('7009', 'userpass', '7009', '12345678'),
+    ('7010', 'userpass', '7010', '12345678')
 ON CONFLICT (id) DO UPDATE SET
     auth_type = EXCLUDED.auth_type,
     username = EXCLUDED.username,
@@ -224,8 +225,8 @@ ON CONFLICT (id) DO UPDATE SET
     send_connected_line = EXCLUDED.send_connected_line;
 
 -- ============================================================
--- 5. IDENTIDADES EXTERNAS DE TESTE
--- tabela ps_endpoints: visitantes/pacientes no contexto site-publico
+-- 5. RAMAIS EXTERNOS DE TESTE
+-- tabela ps_endpoints: pool usado pelo infra/telefone-externo
 -- ============================================================
 
 INSERT INTO ps_endpoints (
@@ -291,17 +292,17 @@ SELECT
     'yes'
 FROM (
     VALUES
-        ('web-0001'),
-        ('web-0002'),
-        ('web-0003'),
-        ('web-0004'),
-        ('web-0005'),
-        ('web-0006'),
-        ('web-0007'),
-        ('web-0008'),
-        ('web-0009'),
-        ('web-0010')
-) AS web_ids(id)
+        ('7001'),
+        ('7002'),
+        ('7003'),
+        ('7004'),
+        ('7005'),
+        ('7006'),
+        ('7007'),
+        ('7008'),
+        ('7009'),
+        ('7010')
+) AS ramais_externos(id)
 ON CONFLICT (id) DO UPDATE SET
     transport = EXCLUDED.transport,
     aors = EXCLUDED.aors,
@@ -391,28 +392,29 @@ COMMIT;
 
   1. Registrar TARM 2001:
      usuario: 2001
-     senha: 2001
+     senha: 12345678
 
   2. Registrar TARM 2002:
      usuario: 2002
-     senha: 2002
+     senha: 12345678
 
   3. Registrar regulacao:
      usuario: 2101
-     senha: 2101
+     senha: 12345678
 
   4. Registrar radio:
      usuario: 2102
-     senha: 2102
+     senha: 12345678
 
-  5. Registrar paciente/site de teste:
-     usuario: web-0001
-     senha: web0001
+  5. Registrar telefone externo de teste:
+     usuario: 7001
+     senha: 12345678
 
-  6. Ligar para 9000 e verificar se a fila chama 2001 ou 2002.
+  6. Ligar para 192 e verificar se o contexto site-publico envia a chamada
+     para a fila e chama 2001 ou 2002.
 
   Navegacao da documentacao:
-  - Anterior: operacao-diagnostico.md
+  - Anterior: como-rodar-setup-rapido.md
   - Indice: README.md
-  - Proximo: como-rodar-setup-rapido.md
+  - Proximo: fim da trilha
 */

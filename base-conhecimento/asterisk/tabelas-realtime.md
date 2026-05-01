@@ -15,7 +15,7 @@ Onde fica:
 
 Campos principais:
 
-- `id`: nome do endpoint. Para ramal interno, exemplo `2001`. Para paciente externo, exemplo `web-483921`.
+- `id`: nome do endpoint. Para ramal interno, exemplo `2001`. Para o telefone externo atual, exemplos `7001` ate `7010`. Para a funcionalidade futura de identidade temporaria, exemplo `web-483921`.
 - `transport`: como o endpoint se conecta. Exemplos: `transport-ws`, `transport-wss`, `transport-udp`.
 - `aors`: qual AOR esse endpoint usa. Normalmente igual ao `id`.
 - `auth`: qual autenticacao esse endpoint usa. Normalmente igual ao `id`.

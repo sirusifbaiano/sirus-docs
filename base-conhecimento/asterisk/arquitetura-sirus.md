@@ -79,16 +79,29 @@ O ponto mais importante: o ramal nao "mora" no navegador. O navegador apenas se 
 
 ## O que acontece quando um paciente liga pelo site externo
 
-O paciente externo nao deve ganhar um ramal interno como `2001`. Para ele, o sistema deve criar uma identidade temporaria, por exemplo `web-483921`.
+O paciente externo nao deve ganhar um ramal interno como `2001`.
+
+No estado atual do projeto, o `infra/telefone-externo/script.js` usa uma configuracao fixa de teste:
+
+```text
+RAMAL_INICIAL = 7001
+RAMAL_FINAL = 7010
+RAMAL_SENHA = 12345678
+NUMERO_SAMU = 192
+```
+
+Ou seja: o navegador sorteia um ramal entre `7001` e `7010`, registra com a senha `12345678` e chama `192`. Esses ramais precisam existir previamente no Asterisk realtime. A query [setup-rapido-ramais-samu.sql](setup-rapido-ramais-samu.sql) prepara esse pool.
+
+A criacao automatica de identidade temporaria pelo backend, como `web-483921`, ainda e uma funcionalidade futura.
 
 Fluxo:
 
 1. Paciente abre o site externo.
-2. Site pede ao backend uma credencial temporaria.
-3. Backend cria ou reserva uma identidade `web-*` no banco realtime.
-4. O navegador registra essa identidade no Asterisk.
-5. O navegador chama `9000`.
-6. O contexto `site-publico` manda a chamada para `fila-tarm`.
+2. O JavaScript sorteia um ramal entre `7001` e `7010`.
+3. O navegador registra esse ramal no Asterisk com senha `12345678`.
+4. O navegador chama `192`.
+5. O contexto `site-publico` redireciona a chamada para `fila-tarm`.
+6. A regra `_X.` do dialplan garante que qualquer numero discado pelo telefone externo caia na fila.
 7. A fila chama um operador TARM disponivel.
 
 ```text
@@ -98,21 +111,16 @@ Paciente
    v
 Site externo
    |
-   | 2. pede uma credencial temporaria
+   | 2. sorteia um ramal entre 7001 e 7010
    v
-Backend SIRUS
+Telefone externo JS
    |
-   | 3. cria ou reserva web-483921
-   v
-PostgreSQL realtime
-   |
-   | 4. Asterisk passa a enxergar essa identidade
+   | 3. registra o ramal sorteado com senha 12345678
    v
 Asterisk
    |
-   | 5. navegador registra web-483921
-   | 6. navegador chama 9000
-   | 7. contexto site-publico manda para fila-tarm
+   | 4. navegador chama 192
+   | 5. contexto site-publico manda para fila-tarm
    v
 Fila TARM
    |
@@ -125,7 +133,7 @@ Operador TARM
 Paciente
 ```
 
-Essa identidade temporaria existe para controle tecnico. Para o paciente, ela nao aparece como ramal. Para a central, ela permite autenticar, auditar e encerrar a sessao corretamente.
+Esse pool fixo existe para teste e simulacao do site externo. Para producao, a evolucao recomendada e o backend gerar uma identidade temporaria por sessao, expirar credenciais e evitar reutilizacao fixa.
 
 ## Duas entradas, uma fila
 
@@ -134,7 +142,7 @@ O sistema tem duas formas principais de chegar na fila TARM:
 ```text
 CAMINHO A: paciente pelo site
 
-Paciente -> identidade web-* -> contexto site-publico -> 9000
+Paciente -> ramal 7001-7010 -> contexto site-publico -> 192 -> 9000
                                                         |
                                                         v
 CAMINHO B: chamada por tronco externo                   |
@@ -161,10 +169,11 @@ No SIRUS, o Django pode:
 - cadastrar ramais internos nas tabelas realtime;
 - cadastrar filas;
 - cadastrar membros da fila;
-- criar identidade temporaria para paciente externo;
+- cadastrar o pool fixo de ramais externos usado hoje pelo `infra/telefone-externo`;
 - vincular usuario do sistema a um ramal;
 - exibir telas administrativas;
-- futuramente pausar/despausar operador ou expirar identidade `web-*`.
+- futuramente criar identidade temporaria para paciente externo;
+- futuramente pausar/despausar operador ou expirar identidades temporarias.
 
 Quem efetivamente registra o SIP, toca chamadas e envia audio continua sendo o Asterisk.
 
@@ -219,15 +228,15 @@ Arquivos importantes no repositorio `samu`:
 | `code/static/js/softphone/softphone.js` | Faz registro SIP/WebRTC e controla chamadas. |
 | `code/static/js/softphone/softphone-bridge.js` | Integra a pagina principal com a janela persistente do softphone. |
 
-## Exemplo completo: chamada do paciente ate o TARM
+## Exemplo completo: chamada do telefone externo ate o TARM
 
 Imagine uma pessoa clicando em "ligar para o SAMU" no site externo.
 
-1. O backend cria `web-483921`.
-2. O navegador registra `web-483921`.
-3. O paciente chama `9000`.
-4. O endpoint `web-483921` esta no contexto `site-publico`.
-5. O contexto `site-publico` permite apenas cair em `9000`.
+1. O `infra/telefone-externo/script.js` sorteia um ramal entre `7001` e `7010`.
+2. O navegador registra esse ramal usando a senha `12345678`.
+3. O telefone externo chama `192`.
+4. O endpoint sorteado esta no contexto `site-publico`.
+5. O contexto `site-publico` redireciona `_X.` para `9000`.
 6. `9000` executa `Queue(fila-tarm,...)`.
 7. A fila consulta `queue_members`.
 8. O Asterisk escolhe um membro, por exemplo `PJSIP/2001`.
@@ -251,7 +260,8 @@ A arquitetura depende muito dos contextos:
 | --- | --- | --- | --- |
 | Operador TARM | `2001` | `samu-tarm` | Receber fila, chamar ramais internos e usar permissoes da equipe. |
 | Equipe interna | `2XXX` | `samu-equipe` | Usar recursos internos autorizados. |
-| Paciente externo | `web-*` | `site-publico` | Entrar na fila TARM pelo `9000`. |
+| Telefone externo atual | `7001` a `7010` | `site-publico` | Chamar `192`, que cai na fila TARM. |
+| Identidade futura do paciente | `web-*` ou equivalente | `site-publico` | Entrar na fila TARM com credencial temporaria gerenciada pelo backend. |
 | Tronco externo | nome do tronco | `samu-entrada` | Encaminhar chamadas recebidas para TARM. |
 
 Regra principal: paciente externo nunca deve estar em contexto interno.
@@ -263,7 +273,11 @@ O paciente externo nao deve usar ramais internos `2XXX`.
 Modelo recomendado:
 
 ```text
-Paciente -> web-* -> site-publico -> 9000 -> fila-tarm -> operador TARM
+Estado atual:
+Paciente -> ramal sorteado 7001-7010 -> site-publico -> 192 -> fila-tarm -> operador TARM
+
+Evolucao futura:
+Paciente -> identidade temporaria -> site-publico -> fila-tarm -> operador TARM
 ```
 
 Essa separacao evita que uma identidade publica tenha permissao indevida dentro da central.

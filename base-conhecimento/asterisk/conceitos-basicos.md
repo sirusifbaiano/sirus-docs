@@ -58,6 +58,8 @@ sessao-120394
 
 Ela serve para um paciente externo conseguir se autenticar e ligar para a fila. Ela deve expirar depois de um tempo ou ao fim da chamada.
 
+No estado atual do projeto, essa criacao automatica ainda nao esta implementada. O `infra/telefone-externo` usa um pool fixo de ramais de teste, de `7001` a `7010`, todos com senha padrao `12345678`. A identidade temporaria automatica e uma evolucao futura.
+
 ## O que e um tronco
 
 Tronco e uma conexao entre o Asterisk e outra rede telefonica.
