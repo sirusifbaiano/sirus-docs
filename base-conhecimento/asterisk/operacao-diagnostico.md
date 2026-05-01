@@ -106,4 +106,4 @@ Verificar:
 
 ---
 
-Navegacao: [Anterior: Paciente externo e identidade temporaria](paciente-externo.md) | [Indice](README.md) | [Proximo: Visao geral antiga](visao-geral.md)
+Navegacao: [Anterior: Paciente externo e identidade temporaria](paciente-externo.md) | [Indice](README.md) | [Proximo: Query de configuracao rapida para testes](setup-rapido-ramais-samu.sql)

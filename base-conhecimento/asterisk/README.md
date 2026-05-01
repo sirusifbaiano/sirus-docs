@@ -13,7 +13,9 @@ Esta pasta organiza a documentacao de telefonia do SIRUS/SAMU em capitulos menor
 7. [Filas e membros de fila](filas.md)
 8. [Paciente externo e identidade temporaria](paciente-externo.md)
 9. [Operacao e diagnostico](operacao-diagnostico.md)
-10. [Visao geral antiga](visao-geral.md)
+10. [Query de configuracao rapida para testes](setup-rapido-ramais-samu.sql)
+11. [Como rodar a query de setup rapido](como-rodar-setup-rapido.md)
+12. [Visao geral antiga](visao-geral.md)
 
 ## Mapa rapido
 
@@ -22,6 +24,8 @@ Esta pasta organiza a documentacao de telefonia do SIRUS/SAMU em capitulos menor
 - Quer configurar quem recebe chamadas do TARM? Va para [Filas e membros de fila](filas.md).
 - Quer entender o visitante do site externo? Va para [Paciente externo e identidade temporaria](paciente-externo.md).
 - Quer resolver problema de registro ou audio? Va para [Operacao e diagnostico](operacao-diagnostico.md).
+- Quer preparar dados basicos de teste? Use a [query de configuracao rapida](setup-rapido-ramais-samu.sql).
+- Quer saber como executar a query? Leia [como rodar a query de setup rapido](como-rodar-setup-rapido.md).
 
 ## Regra de ouro do projeto
 

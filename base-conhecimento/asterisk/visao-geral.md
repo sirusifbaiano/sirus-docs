@@ -337,4 +337,4 @@ Essa abordagem preserva a simplicidade para o paciente, evita expor ramais inter
 
 ---
 
-Navegacao: [Anterior: Operacao e diagnostico](operacao-diagnostico.md) | [Indice](README.md)
+Navegacao: [Anterior: Como rodar a query de setup rapido](como-rodar-setup-rapido.md) | [Indice](README.md)
