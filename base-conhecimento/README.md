@@ -19,6 +19,10 @@ Aqui reunimos materiais essenciais para capacitação dos desenvolvedores da equ
 
 ## 📌 Tópicos de Capacitação
 
+### ☎️ Telefonia e Asterisk
+- [Asterisk e Telefonia WebRTC](asterisk/README.md) - **INTERMEDIÁRIO**  
+  ➤ Arquitetura da telefonia, fila TARM, softphone interno e identidade temporária para pacientes do site externo.
+
 ### 🐙 GitHub
 - [Curso de Git e GitHub - Código Fonte TV](https://www.youtube.com/watch?v=ts-H3W1uLMM&ab_channel=C%C3%B3digoFonteTV) - **INICIANTE**
 - [Curso de Git e Github - Fernanda Kipper](https://www.youtube.com/watch?v=pyM5QLS2h6M&ab_channel=FernandaKipper%7CDev) - **INICIANTE**
