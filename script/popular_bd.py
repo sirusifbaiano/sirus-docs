@@ -1,37 +1,10 @@
-"""
-# Este script utiliza as factories dos testes para criar registros 
-# no banco de dados, de forma a popular o sistema com dados realistas 
-# para facilitar os testes manuais e a demonstração das funcionalidades. 
-
-# Abra um terminal na raiz do projeto e execute nele os comandos a seguir
-
-# acessa o container do Django interativamente
-docker exec -it django-dev /bin/bash
-
-# define o nome do script como variável
-NOME_SCRIPT="popular_bd.py"
-
-# baixa o script
-curl -O https://raw.githubusercontent.com/sirusifbaiano/sirus-docs/refs/heads/main/script/$NOME_SCRIPT
-
-# limpa os dados atuais no BD para evitar conflitos
-python manage.py flush --no-input
-
-# executa-o
-python $NOME_SCRIPT
-
-# remove-o
-rm $NOME_SCRIPT
-
-"""
 import os
 import django
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'samu.settings')
 django.setup()
 
-
-from samu.tests.factories import UserFactory
+from samu.tests.factories import UserFactory, User
 from base.tests.factories import BaseFactory
 from chamado.tests.factories import (
     ChamadoFactory, UnidadeChamadoFactory, 
@@ -55,6 +28,7 @@ from datetime import datetime, timedelta
 from django.utils import timezone
 from django.db import transaction
 from rest_framework.authtoken.models import Token
+from django.contrib.auth.hashers import make_password
 
 DESTINO_PACIENTE_CHOICES = [{"valor": valor} for valor, _ in DESTINO_PACIENTE_CHOICES[:-1]]
 
@@ -161,6 +135,10 @@ def criar_colaboradores(setores, admin):
         colaboradores = ColaboradorFactory.create_batch(random.randint(1, 5), criado_por=admin, base_cadastro=setor.base)
         colaboradores_usuarios = [colaborador.usuario for colaborador in colaboradores ]
         setor.membro.set(colaboradores_usuarios)
+
+    senha_padrao = os.environ.get('DEFAULT_COLABORADOR_PASSWORD', '123456')
+    senha_padrao_hash = make_password(senha_padrao)
+    User.objects.filter(is_superuser=False).update(password=senha_padrao_hash)
 
     print(f"{len(ColaboradorFactory._meta.model.objects.all())} colaboradores criados com sucesso.\n")
 
