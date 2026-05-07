@@ -93,7 +93,7 @@ class Samu.Pessoa {
     - baseCadastro: Base
 }
 
-class Samu.AtendimentoPessoa{
+class Samu.AtendimentoPessoa {
     - chamado: Chamado
     - paciente: Pessoa
     - nomeProvisorio: string
@@ -188,7 +188,7 @@ class Samu.TramiteChamado {
     - status: string
 }
 
-class Samu.Unidade{
+class Samu.Unidade {
     - nome: string
     - central: Base
     - tipo: string
@@ -203,7 +203,7 @@ class Samu.Unidade{
     - lotacao: int
 }
 
-class Samu.Fluxo{
+class Samu.Fluxo {
     - central: Base
     - setor: Setor
     - ordem: int
@@ -218,12 +218,48 @@ class Samu.UnidadeChamado {
     - status: string
 }
 
-class Samu.Tracking{
+class Samu.Tracking {
     - unidadeChamado: UnidadeChamado
+    - unidade: Unidade
     - latitude: float
     - longitude: float
     - velocidade: float
     - dataHora: timestamp    
+}
+
+class Samu.Evento {
+    - nome: string
+    - titulo: string
+    - descricao: string
+    - mensagem: string
+    - permissions: Django.Auth.Permission
+    - permissions_hash: JSONField
+}
+
+class Samu.Notificacao {
+    - destinatario: Django.Auth.User
+    - titulo: string
+    - mensagem: string
+    - criada_em: datetime
+    - lida_em: datetime
+    - lida: boolean
+    - url: URLField
+	- evento: Samu.Evento 
+}
+
+class Samu.PreferenciaDeNotificacao {
+    - usuario: Django.Auth.User
+    - evento: Evento
+    - sistema: boolean
+    - email: boolean
+}
+
+class Samu.Relatorio {
+    - nome: string
+    - descricao: string
+    - html: string
+    - criado_em: datetime
+    - base: Base
 }
 
 ' Relacionamentos
@@ -280,6 +316,7 @@ Fluxo "1" -- "1" Base : "pertence a"
 Fluxo "1" -- "n" Setor : "tramita por"
 
 Tracking "n" -- "1" UnidadeChamado : "deslocamento"
+Tracking "n" -- "1" Unidade 
 
 Forum "n" -- "1" Django.Auth.User : "postado por"
 
@@ -292,7 +329,12 @@ UnidadeChamado "n" -- "1" Unidade : "alocada"
 
 AtendimentoPessoa "1" .. "1" Unidade : "atende"
 
-Notificacao "1" -- "1" Django.Auth.User : "recebe/envia"
-Notificacao "1" .. "1" Chamado : "referente a"
+Evento "1" -- "0..*" PreferenciaDeNotificacao
+Evento "1" -- "0..*" Notificacao
+Evento "*" -- "*" Django.Auth.Permission
+User "1" -- "0..*" PreferenciaDeNotificacao
+Notificacao "0..*" -- "1" Django.Auth.User : destinatario
+
+Relatorio "0..*" -- "1" Base
 
 @enduml
