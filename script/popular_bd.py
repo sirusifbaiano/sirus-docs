@@ -98,7 +98,7 @@ def criar_setores(admin, central, bases):
     dados_setores = [
         {
             "nome": "TARM", 
-            "permissions": ['add_chamado']
+            "permissions": ['add_chamado', 'view_chamado']
         },
         {
             "nome": "Regulação", 

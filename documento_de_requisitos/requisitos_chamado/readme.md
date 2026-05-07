@@ -1,6 +1,6 @@
 # 📑 Índice de Requisitos Funcionais - Chamado
 
-Este diretório contém os requisitos funcionais relacionados à funcionalidade **Chamado**, criados hoje.  
+Este diretório contém os requisitos funcionais relacionados à funcionalidade **Chamado**.  
 Clique em um requisito para visualizar seu conteúdo completo.
 
 | Código      | Requisito | Descrição do caso de uso |
