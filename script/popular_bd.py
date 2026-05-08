@@ -375,8 +375,8 @@ def popular():
         fluxos = Fluxo.objects.order_by("ordem").select_related("setor")
         setores_fluxo = [fluxo.setor for fluxo in fluxos]
         
-        criar_chamados(dados_bases, central, setores_fluxo)
-        criar_tramites_e_unidades_chamados(setores_fluxo)
+        #criar_chamados(dados_bases, central, setores_fluxo)
+        #criar_tramites_e_unidades_chamados(setores_fluxo)
 
         fim = datetime.now()
         duracao = fim - inicio
