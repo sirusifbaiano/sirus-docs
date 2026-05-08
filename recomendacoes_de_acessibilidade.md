@@ -2,7 +2,7 @@
 
 Este documento tem como objetivo orientar a equipe de desenvolvimento sobre os requisitos de acessibilidade mais comuns que devem ser observados durante a implementação das páginas do sistema, com base na norma ABNT NBR 17225. Os exemplos de código apresentados foram extraídos do próprio sistema, a fim de ilustrar situações reais e facilitar a aplicação das correções necessárias.
 
-A norma completa está disponível [no repositório do projeto](https://github.com/profcarlosanderson/samu/blob/dev/docs/base-conhecimento/ABNT%20NBR%2017225%20-%20Acessibilidade%20Digital.pdf). Um resumo dos seus principais pontos está disponível no site do [Foco Acessível](https://focoacessivel.com.br/blog/abnt-nbr-17225-2025-a-nova-norma-de-acessibilidade-digital-no-brasil.html#:~:text=Principais%20requisitos%20da%20norma).
+A norma completa está disponível [no repositório do projeto](./base-conhecimento/ABNT%20NBR%2017225%20-%20Acessibilidade%20Digital.pdf). Um resumo dos seus principais pontos está disponível no site do [Foco Acessível](https://focoacessivel.com.br/blog/abnt-nbr-172252025-a-nova-norma-de-acessibilidade-digital-no-brasil/).
 
 ## 1. Links e botões
 
