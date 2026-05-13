@@ -262,6 +262,16 @@ class Samu.Relatorio {
     - base: Base
 }
 
+class Samu.UserSessionLog {
+    - usuario: Django.Auth.User
+    - endereco_ip: string
+    - agente_usuario: text
+    - navegador: string
+    - dispositivo: string
+    - geolocalizacao: JSONField
+    - criado_em: datetime
+}
+
 ' Relacionamentos
 ' Herdado do Django.Auth.User
 class Django.Auth.User {
@@ -286,6 +296,16 @@ class Django.Auth.Permission {
 class Django.Contrib.ContentType {
     - app_label: string
     - model: string
+}
+class Auditlog.LogEntry {
+    - content_type: Django.Contrib.ContentType
+    - object_id: string
+    - object_repr: string
+    - action: int
+    - changes: JSONField
+    - actor: Django.Auth.User
+    - timestamp: datetime
+    - additional_data: JSONField
 }
 
 ' Relacionamentos
@@ -316,7 +336,7 @@ Fluxo "1" -- "1" Base : "pertence a"
 Fluxo "1" -- "n" Setor : "tramita por"
 
 Tracking "n" -- "1" UnidadeChamado : "deslocamento"
-Tracking "n" -- "1" Unidade 
+Tracking "n" -- "1" Unidade
 
 Forum "n" -- "1" Django.Auth.User : "postado por"
 
@@ -336,5 +356,9 @@ User "1" -- "0..*" PreferenciaDeNotificacao
 Notificacao "0..*" -- "1" Django.Auth.User : destinatario
 
 Relatorio "0..*" -- "1" Base
+
+UserSessionLog "n" -- "1" Django.Auth.User : "usuario"
+Auditlog.LogEntry "n" -- "1" Django.Auth.User : "ator"
+Auditlog.LogEntry "n" -- "1" Django.Contrib.ContentType : "modelo auditado"
 
 @enduml
